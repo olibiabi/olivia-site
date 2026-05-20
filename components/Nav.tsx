@@ -25,10 +25,8 @@ export function Nav() {
 
   return (
     <header
-      className="fixed top-0 left-0 right-0 flex items-center justify-between backdrop-blur-md"
+      className="fixed top-0 left-0 right-0 flex h-16 md:h-20 items-center justify-between gap-4 px-5 md:px-12 backdrop-blur-md"
       style={{
-        height: 80,
-        padding: "20px 48px",
         // Paper at 70% alpha + backdrop-blur(12px) = frosted glass.
         // Content scrolling underneath shows through with color tint.
         backgroundColor: "rgba(253, 246, 238, 0.7)",
@@ -45,22 +43,19 @@ export function Nav() {
           height={40}
           priority
           unoptimized
-          style={{ height: 40, width: "auto", display: "block" }}
+          className="h-8 w-auto md:h-10"
+          style={{ display: "block" }}
         />
       </Link>
 
-      <nav
-        className="flex items-center"
-        style={{ fontSize: 16, fontWeight: 500 }}
-      >
+      <nav className="flex min-w-0 shrink items-center text-[12px] font-medium sm:text-sm md:text-base">
         {NAV_LINKS.map((link, i) => (
           <Fragment key={link.href}>
             {i > 0 && (
               <span
                 aria-hidden="true"
-                className="select-none"
+                className="mx-1.5 select-none sm:mx-2 md:mx-[18px]"
                 style={{
-                  margin: "0 18px",
                   color: "var(--ink-mute)",
                 }}
               >
@@ -91,7 +86,7 @@ function NavLink({ href, active, children }: NavLinkProps) {
   return (
     <Link
       href={href}
-      className="inline-flex items-center text-ink transition-colors duration-200 hover:text-rose-deep"
+      className="inline-flex min-w-0 items-center text-ink transition-colors duration-200 hover:text-rose-deep"
       style={{ fontStyle: active ? "italic" : "normal" }}
     >
       {/* Cross prefix for the current page. Width + opacity transition
@@ -103,9 +98,9 @@ function NavLink({ href, active, children }: NavLinkProps) {
         aria-hidden="true"
         className="cross inline-flex items-center overflow-hidden transition-all duration-300"
         style={{
-          width: active ? 14 : 0,
+          width: active ? "clamp(10px, 1vw, 14px)" : 0,
           opacity: active ? 1 : 0,
-          marginRight: active ? 8 : 0,
+          marginRight: active ? "clamp(6px, 0.55vw, 8px)" : 0,
           color: "var(--rose-deep)",
         }}
       >

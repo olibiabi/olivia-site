@@ -46,7 +46,7 @@ export default async function LabDetailPage({ params }: Props) {
       <CrossField crosses={introCrosses} className="hidden md:block" />
 
       {/* Back link */}
-      <div className="relative z-10 px-20 pt-8">
+      <div className="relative z-10 px-5 pt-6 md:px-20 md:pt-8">
         <Link
           href="/lab"
           className="text-[13px] text-ink-soft transition-colors hover:text-rose-deep"
@@ -56,14 +56,14 @@ export default async function LabDetailPage({ params }: Props) {
       </div>
 
       {/* Intro block — centered, lighter than /projects detail */}
-      <div className="relative z-10 text-center px-20 pt-12 pb-8">
+      <div className="relative z-10 text-center px-5 pt-10 pb-8 md:px-20 md:pt-12">
         <p
           className="text-xs font-medium text-rose-deep mb-3 uppercase"
           style={{ letterSpacing: "0.1em" }}
         >
           {project.tag} · {project.year}
         </p>
-        <h1 className="text-[48px] font-medium text-ink mb-4">
+        <h1 className="text-[34px] font-medium text-ink mb-4 md:text-[48px]">
           {project.title}
         </h1>
         {project.shortDescription && (
@@ -81,7 +81,7 @@ export default async function LabDetailPage({ params }: Props) {
       {/* YouTube embed — only rendered when frontmatter provides a URL.
           16:9 box via aspect-video, max 800px, centered. */}
       {project.youtubeEmbed && (
-        <div className="relative z-10 flex justify-center px-20 pb-12">
+        <div className="relative z-10 flex justify-center px-5 pb-10 md:px-20 md:pb-12">
           <div className="relative w-full max-w-[800px] aspect-video">
             <iframe
               src={project.youtubeEmbed}
@@ -103,11 +103,11 @@ export default async function LabDetailPage({ params }: Props) {
       {/* Prev/Next (per-tag loop) */}
       {hasSiblings && (
         <>
-          <div className="px-20 mt-16 mb-10">
+          <div className="px-5 mt-12 mb-8 md:px-20 md:mt-16 md:mb-10">
             <HairlineWithCross left="42%" variant="c" size={18} />
           </div>
 
-          <div className="flex justify-between items-start px-20 pb-10">
+          <div className="flex flex-col gap-8 px-5 pb-10 sm:flex-row sm:justify-between sm:items-start md:px-20">
             {prev && (
               <Link href={`/lab/${prev.slug}`} className="group">
                 <p

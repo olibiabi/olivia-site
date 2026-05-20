@@ -29,15 +29,15 @@ export default function ProjectsPage() {
   return (
     <div className="min-h-[calc(100vh-80px)]">
       {/* Page header */}
-      <div className="px-20 pt-10 pb-6">
+      <div className="px-5 pt-8 pb-6 md:px-20 md:pt-10">
         <h1 className="text-4xl font-medium text-ink mb-1">Projects</h1>
-        <p className="text-sm text-ink-soft">
+        <p className="text-sm text-ink-soft break-words">
           Selected works in interaction design, installation, and curation.
         </p>
       </div>
 
       {/* Top hairline (above first row) */}
-      <div className="px-20">
+      <div className="px-5 md:px-20">
         <HairlineWithCross
           {...HAIRLINE_POSITIONS[0]}
           variant="b"
@@ -52,25 +52,25 @@ export default function ProjectsPage() {
             href={`/projects/${project.slug}`}
             className="block group transition-transform duration-300 hover:-translate-y-[3px]"
           >
-            <div className="grid grid-cols-[60px_380px_1fr] gap-8 px-20 py-8 items-start">
+            <div className="grid min-w-0 grid-cols-1 gap-4 px-5 py-8 items-start md:grid-cols-[60px_380px_1fr] md:gap-8 md:px-20">
               {/* Year — italic rose-deep */}
               <p className="text-sm italic text-rose-deep mt-2">
                 {project.year}
               </p>
 
               {/* Cover — fixed 380×285 (4:3) */}
-              <div className="relative aspect-[4/3] w-[380px] overflow-hidden">
+              <div className="relative aspect-[4/3] w-full min-w-0 overflow-hidden md:w-[380px]">
                 <Image
                   src={project.cover}
                   alt={project.title}
                   fill
-                  sizes="380px"
+                  sizes="(min-width: 768px) 380px, calc(100vw - 40px)"
                   className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
                 />
               </div>
 
               {/* Text — title, type label, summary */}
-              <div className="pt-2">
+              <div className="min-w-0 pt-2">
                 <h2 className="text-[22px] font-medium text-ink mb-1 transition-colors duration-200 group-hover:text-rose-deep">
                   {project.title}
                   <span
@@ -95,7 +95,7 @@ export default function ProjectsPage() {
                     )}
                   </p>
                 )}
-                <p className="text-sm text-ink leading-relaxed mt-4 max-w-[480px]">
+                <p className="max-w-[480px] break-words text-sm leading-relaxed text-ink mt-4">
                   {project.summary}
                 </p>
               </div>
@@ -104,7 +104,7 @@ export default function ProjectsPage() {
 
           {/* Hairline below this row. Index `i + 1` so position 0 is
               reserved for the top hairline. Cycles through positions. */}
-          <div className="px-20">
+          <div className="px-5 md:px-20">
             <HairlineWithCross
               {...HAIRLINE_POSITIONS[(i + 1) % HAIRLINE_POSITIONS.length]}
               variant={VARIANT_CYCLE[i % VARIANT_CYCLE.length]}

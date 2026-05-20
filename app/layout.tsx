@@ -47,8 +47,8 @@ export default function RootLayout({
             `pt-20` (80px) reserves space for the fixed Nav above —
             without it, the first 80px of content would render under
             the frosted-glass nav. */}
-        <div className="flex-1 pt-20">{children}</div>
-        <footer className="border-t border-hairline mx-12 mt-6 py-4 text-center">
+        <div className="flex-1 pt-16 md:pt-20">{children}</div>
+        <footer className="border-t border-hairline mx-5 mt-6 py-4 text-center md:mx-12">
           <span className="text-xs text-ink-mute">
             © 2026 Olivia Zhu / 朱怡宣
           </span>

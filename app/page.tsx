@@ -56,19 +56,17 @@ export default function Home() {
           height={240}
           priority
           unoptimized
+          className="h-[180px] w-[180px] translate-y-8 md:h-[240px] md:w-[240px] md:translate-y-[60px]"
           // translateY shifts the rendered logo 60px down without
           // affecting flex centering math (transform is visual only).
           style={{
             display: "block",
-            width: 240,
-            height: 240,
-            transform: "translateY(60px)",
           }}
         />
       </div>
 
       {/* Tagline + CTA — left-aligned, max width 580. */}
-      <div className="relative z-10 px-6 md:px-20 pb-24 max-w-[580px]">
+      <div className="relative z-10 max-w-[580px] px-5 pb-16 md:px-20 md:pb-24">
         <p className="text-[20px] font-medium text-ink mb-2">
           Art × Design × AIGC
         </p>

@@ -26,7 +26,7 @@ type TagFilterProps = {
  */
 export function TagFilter({ activeTag, onTagChange }: TagFilterProps) {
   return (
-    <div className="flex gap-2 flex-wrap px-20 pb-10">
+    <div className="flex gap-2 flex-wrap px-5 pb-8 md:px-20 md:pb-10">
       {LAB_TAGS.map((tag) => {
         const isActive = tag === activeTag
         return (

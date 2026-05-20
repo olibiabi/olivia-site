@@ -49,7 +49,7 @@ export default async function ProjectDetailPage({ params }: Props) {
       <CrossField crosses={titleCrosses} className="hidden md:block" />
 
       {/* Back link — z-10 keeps it above the cross field */}
-      <div className="relative z-10 px-20 pt-8">
+      <div className="relative z-10 px-5 pt-6 md:px-20 md:pt-8">
         <Link
           href="/projects"
           className="text-[13px] text-ink-soft transition-colors hover:text-rose-deep"
@@ -59,9 +59,9 @@ export default async function ProjectDetailPage({ params }: Props) {
       </div>
 
       {/* Title block — centered, four-line hierarchy */}
-      <div className="relative z-10 text-center px-20 pt-16 pb-8">
+      <div className="relative z-10 text-center px-5 pt-10 pb-8 md:px-20 md:pt-16">
         <h1
-          className="text-[56px] font-medium text-ink mb-3"
+          className="text-[36px] font-medium text-ink mb-3 md:text-[56px]"
           style={{ letterSpacing: "-0.01em" }}
         >
           {project.title}
@@ -86,7 +86,7 @@ export default async function ProjectDetailPage({ params }: Props) {
           Using next/image with intrinsic 800×600 (a 4:3 hint) — actual
           rendered dimensions follow the image's natural aspect via
           `h-auto`. No `object-fit`, no `aspect-ratio` clipping per §6.3. */}
-      <div className="relative z-10 flex justify-center px-20 pb-12">
+      <div className="relative z-10 flex justify-center px-5 pb-10 md:px-20 md:pb-12">
         <Image
           src={project.cover}
           alt={project.title}
@@ -105,7 +105,7 @@ export default async function ProjectDetailPage({ params }: Props) {
 
       {/* Hairline + cross before prev/next nav */}
       {(prev || next) && (
-        <div className="px-20 mt-16 mb-10">
+        <div className="px-5 mt-12 mb-8 md:px-20 md:mt-16 md:mb-10">
           <HairlineWithCross left="42%" variant="c" size={18} />
         </div>
       )}
@@ -114,7 +114,7 @@ export default async function ProjectDetailPage({ params }: Props) {
           space when only one side is present, so the visible link still
           aligns to its expected edge. */}
       {(prev || next) && (
-        <div className="flex justify-between items-start px-20 pb-10">
+        <div className="flex flex-col gap-8 px-5 pb-10 sm:flex-row sm:justify-between sm:items-start md:px-20">
           {prev ? (
             <Link href={`/projects/${prev.slug}`} className="group">
               <p

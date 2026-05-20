@@ -47,6 +47,13 @@ body {
   color: var(--ink);
   font-family: var(--font-inter), "Noto Sans SC", sans-serif;
   font-weight: 400;
+  overflow-x: hidden;
+}
+
+img,
+video,
+iframe {
+  max-width: 100%;
 }
 
 /* ─── Text selection ───────────────────────────────────────── */
@@ -378,8 +385,40 @@ article .project-video video {
 }
 
 @media (max-width: 768px) {
+  .mdx-article {
+    padding: 0 20px;
+  }
+
+  .mdx-article p,
+  .mdx-article .zh {
+    max-width: 100%;
+  }
+
+  .mdx-article img,
+  .lab-article img {
+    max-width: 100%;
+    max-height: none;
+    margin: 32px auto;
+  }
+
+  .mdx-article .video-embed,
+  .lab-article .video-embed {
+    max-width: 100%;
+    margin: 32px auto 40px;
+  }
+
+  .lab-article {
+    max-width: none;
+    padding: 0 20px;
+  }
+
+  .lab-gallery {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
   .lab-article .motion-gallery {
-    width: calc(100vw - 2rem);
+    width: calc(100vw - 40px);
   }
 
   .lab-article .motion-grid {

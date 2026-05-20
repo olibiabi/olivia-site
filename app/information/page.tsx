@@ -71,21 +71,19 @@ const experienceItems = [
   },
 ] as const
 
-const elsewhereLinks = ["LinkedIn", "Instagram", "GitHub", "小红书"] as const
-
 export default function InformationPage() {
   return (
     <div className="relative min-h-[calc(100vh-80px)] pb-10">
       <CrossField crosses={informationCrosses} className="hidden md:block" />
 
-      <div className="relative z-10 px-6 md:px-20 pt-10 pb-4">
+      <div className="relative z-10 px-5 md:px-20 pt-10 pb-4">
         <h1 className="text-4xl font-medium text-ink">Information</h1>
       </div>
 
-      <main className="relative z-10 px-6 md:px-20">
-        <section className="grid gap-8 md:grid-cols-[200px_1fr] md:gap-12 max-w-[900px] mx-auto pt-8 pb-12">
+      <main className="relative z-10 px-5 md:px-20">
+        <section className="grid min-w-0 gap-8 md:grid-cols-[200px_1fr] md:gap-12 max-w-[900px] mx-auto pt-8 pb-12">
           <div aria-hidden="true" className="hidden md:block" />
-          <div>
+          <div className="min-w-0">
             <h2 className="text-[28px] font-medium text-ink mb-1">
               Olivia Zhu / 朱怡宣
             </h2>
@@ -132,7 +130,7 @@ export default function InformationPage() {
         <InfoSection label="EXPERIENCE">
           <div className="space-y-7">
             {experienceItems.map((item) => (
-              <TimelineItem key={item.year} year={item.year}>
+              <TimelineItem key={`${item.year}-${item.title}`} year={item.year}>
                 <h3 className="text-base font-medium text-ink">
                   {item.title}
                 </h3>
@@ -164,25 +162,12 @@ export default function InformationPage() {
               yz12054@nyu.edu
             </a>
 
-            <div className="mt-8">
-              <ContactLabel>ELSEWHERE</ContactLabel>
-              <div className="flex flex-wrap gap-x-6 gap-y-3 text-[15px]">
-                {elsewhereLinks.map((label) => (
-                  <a
-                    key={label}
-                    href="#"
-                    className="text-ink border-b border-hairline pb-px transition-colors duration-200 hover:text-rose-deep hover:border-rose-deep"
-                  >
-                    {label}
-                  </a>
-                ))}
-              </div>
-            </div>
-
             <a
-              href="/resume.pdf"
+              href="/Yixuan_Zhu_CV.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
               download
-              className="mt-8 inline-flex items-center gap-2.5 bg-rose-deep text-paper rounded-3xl px-9 py-3.5 text-[13px] font-medium tracking-wider uppercase transition-colors duration-200 hover:bg-ink"
+              className="mt-6 inline-flex max-w-full flex-wrap items-center justify-center gap-2.5 rounded-3xl bg-rose-deep px-6 py-3.5 text-center text-[13px] font-medium uppercase tracking-wider text-paper transition-colors duration-200 hover:bg-ink md:flex-nowrap md:px-9"
             >
               Download Resume
               <span aria-hidden="true">/</span>
@@ -213,11 +198,11 @@ function InfoSection({
   children: React.ReactNode
 }) {
   return (
-    <section className="grid gap-6 md:grid-cols-[200px_1fr] md:gap-12 max-w-[900px] mx-auto py-12">
+    <section className="grid min-w-0 gap-6 md:grid-cols-[200px_1fr] md:gap-12 max-w-[900px] mx-auto py-12">
       <div className="text-sm font-medium text-ink-soft tracking-[0.05em] mt-2">
         {label}
       </div>
-      <div>{children}</div>
+      <div className="min-w-0">{children}</div>
     </section>
   )
 }
@@ -230,9 +215,9 @@ function TimelineItem({
   children: React.ReactNode
 }) {
   return (
-    <div className="grid gap-2 sm:grid-cols-[130px_1fr]">
+    <div className="grid min-w-0 gap-2 sm:grid-cols-[130px_1fr]">
       <p className="text-sm italic text-rose-deep">{year}</p>
-      <div>{children}</div>
+      <div className="min-w-0">{children}</div>
     </div>
   )
 }

@@ -29,7 +29,7 @@ export function LabGrid({ labs }: LabGridProps) {
     <>
       <TagFilter activeTag={activeTag} onTagChange={setActiveTag} />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 px-20">
+      <div className="grid grid-cols-1 gap-5 px-5 md:grid-cols-2 md:px-20 lg:grid-cols-3">
         {filtered.map((lab) => (
           <LabCard key={lab.slug} lab={lab} />
         ))}
