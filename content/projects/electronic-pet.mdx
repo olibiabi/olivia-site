@@ -1,0 +1,132 @@
+---
+title: Electronic Pet
+year: 2026
+order: 11
+
+cover: /images/projects/project-05-electronic-pet/cover.jpg
+
+summary: "An AI-assisted physical computing pet game that connects a handmade ESP32 paw controller with a p5.js animated interface, allowing users to feed, play with, bathe, and blow-dry a virtual cat through buttons and microphone input."
+
+summaryZh: "一个结合 AIGC 视觉生成、ESP32 爪子控制器与 p5.js 动画界面的物理计算宠物游戏，用户可以通过按钮与麦克风输入来喂食、陪玩、洗澡和吹干一只虚拟小猫。"
+
+role: "AI Visual Workflow · Interaction Design · Physical Computing · Creative Coding · Interface Design"
+
+roleZh: "AI 视觉工作流 · 交互设计 · 物理计算 · 创意编程 · 界面设计"
+
+tools:
+  - p5.js
+  - p5play
+  - ESP32
+  - Arduino
+  - Web Serial
+  - Fusion 360
+  - 3D Printing
+  - Suno
+  - AIGC
+
+type: Physical Computing
+typeZh: 物理计算
+
+videoUrl: ""
+draft: false
+---
+
+## Overview
+
+*Electronic Pet* is an AI-assisted physical computing pet game that combines a handmade ESP32 paw controller with a p5.js animated interface. Inspired by Tamagotchi-style digital companions, the project explores how a virtual character can feel more emotionally present when connected to a small physical device.
+
+<div className="zh">
+《Electronic Pet》是一个结合 AIGC 视觉生成、ESP32 爪子控制器与 p5.js 动画界面的物理计算宠物游戏。项目受到 Tamagotchi 类电子宠物的启发，探索当虚拟角色被连接到一个可触摸的实体设备时，如何产生更强的情感陪伴感。
+</div>
+
+The player takes care of a pixel-style black cat by feeding it, playing with it, bathing it, and blow-drying it. The cat’s behavior changes through a simple status system, including hunger, cleanliness, energy, and mood. These values are affected by both time and user interaction.
+
+<div className="zh">
+玩家可以通过喂食、陪玩、洗澡和吹干等行为照顾一只像素风格的小黑猫。小猫的状态由饥饿值、清洁度、能量和心情组成，这些数值会随着时间变化，也会根据用户的操作发生改变。
+</div>
+
+All character sprites, food assets, and game background scenes were generated through an AIGC workflow and then selected, organized, and adapted into a consistent pixel-style visual system. The background music was also generated with Suno, creating a soft and playful sound atmosphere for the pet world.
+
+<div className="zh">
+项目中的角色素材、食物图像和游戏背景画面均通过 AIGC 工作流生成，并经过筛选、整理和视觉统一，形成一致的像素风格视觉系统。背景音乐也由 Suno 生成，用来营造柔和、轻松且带有陪伴感的宠物世界氛围。
+</div>
+
+## Process
+
+<div className="project-video">
+  <video
+    src="/images/projects/project-05-electronic-pet/01-process.mov"
+    autoPlay
+    loop
+    muted
+    playsInline
+  />
+</div>
+
+The visual system began with an AI-assisted character generation process. I generated and selected different pixel-style cat states, including sitting, eating, playing, bathing, getting wet, blow-drying, sleeping, and feeling sad. These states were then organized into a character behavior system so the pet could respond visually to different care actions.
+
+<div className="zh">
+视觉系统最初从 AI 辅助角色生成开始。我生成并筛选了不同的小猫像素状态，包括坐着、吃饭、玩耍、洗澡、变湿、吹干、睡觉和难过。之后，我将这些素材整理为角色行为系统，让电子宠物能够根据用户的照顾行为产生不同的视觉反馈。
+</div>
+
+![Scene design](/images/projects/project-05-electronic-pet/02-process.jpg)
+
+The pet world was divided into three main AI-generated scenes: home, kitchen, and bathroom. Each interaction moves the cat into a different context. Feeding brings the cat into the kitchen, bathing moves it into the bathroom, and idle moments return it to the home scene.
+
+<div className="zh">
+宠物世界被划分为三个主要的 AI 生成场景：客厅、厨房和浴室。不同的互动会将小猫带入不同的空间语境中：喂食时进入厨房，洗澡时进入浴室，待机时则回到家中的场景。
+</div>
+
+![Food interaction system](/images/projects/project-05-electronic-pet/03-process.png)
+
+I also created a small AI-generated food selection system, including shrimp, fish, and chicken dishes. These options made the feeding interaction feel more playful and gave the user a clearer sense of choice.
+
+<div className="zh">
+我也制作了一个由 AI 生成素材组成的食物选择系统，包括虾、鱼和鸡肉三种食物。这个设计让喂食行为更有游戏感，也让用户在照顾小猫时拥有更明确的选择。
+</div>
+
+![Controller design](/images/projects/project-05-electronic-pet/06-process.jpg)
+
+The physical controller was designed as a paw-shaped handheld device. It includes three buttons for menu navigation and selection, a small OLED screen for displaying interaction options, and a microphone input for detecting blowing during the drying interaction.
+
+<div className="zh">
+实体控制器被设计成一个爪子形状的手持设备。它包含三个用于菜单切换和确认的按钮，一个用于显示互动选项的小型 OLED 屏幕，以及一个用于检测吹气行为的麦克风输入。
+</div>
+
+![Fabrication process](/images/projects/project-05-electronic-pet/07-process.jpg)
+
+The controller shell was modeled, 3D printed, painted, and assembled by hand. I wanted the object to feel soft and toy-like, so the form uses rounded edges and pastel-colored buttons to match the playful tone of the virtual pet.
+
+<div className="zh">
+控制器外壳经过建模、3D 打印、喷漆和手工组装。我希望这个实体设备看起来柔软、像玩具一样亲近，所以外形使用了圆润的边缘和浅粉色按钮，与电子宠物的可爱视觉风格保持一致。
+</div>
+
+![Hardware assembly](/images/projects/project-05-electronic-pet/08-process.jpg)
+
+Inside the shell, the ESP32 connects the buttons, OLED screen, and microphone sensor. The controller sends interaction commands to the p5.js interface through Web Serial, allowing the physical device to control the animated cat on the computer screen.
+
+<div className="zh">
+外壳内部由 ESP32 连接按钮、OLED 屏幕和麦克风传感器。控制器通过 Web Serial 将互动指令发送到 p5.js 界面中，让实体设备能够控制电脑屏幕里的动画小猫。
+</div>
+
+## Outcome
+
+![Final prototype](/images/projects/project-05-electronic-pet/09-final.jpg)
+
+The final prototype connects the AI-assisted visual world, the p5.js interaction system, and the physical ESP32 controller into one complete pet experience. Users can choose actions on the handheld device, while the cat responds on the screen through animated scenes, changing status values, and sound feedback.
+
+<div className="zh">
+最终原型将 AI 辅助生成的视觉世界、p5.js 互动系统和 ESP32 实体控制器连接成一个完整的电子宠物体验。用户可以在手持设备上选择不同操作，而屏幕中的小猫会通过动画场景、状态数值变化和声音反馈作出回应。
+</div>
+
+The most successful part of the project was the relationship between the digital pet and the physical controller. Instead of treating the controller as only an input device, I designed it as part of the pet’s world. The small OLED menu, paw-shaped shell, buttons, and microphone interaction all helped create a stronger connection between the player and the virtual character.
+
+<div className="zh">
+这个项目中最成功的部分，是数字宠物和实体控制器之间形成的关系。我没有把控制器仅仅当作一个输入设备，而是将它设计成宠物世界的一部分。小型 OLED 菜单、爪子形状的外壳、按钮和麦克风吹气互动，都让玩家和虚拟角色之间产生了更强的连接。
+</div>
+
+This project helped me understand how AI-generated assets, creative coding, and physical computing can work together in an interactive experience. It also became an important experiment in combining character design, interface design, hardware prototyping, and real-time interaction.
+
+<div className="zh">
+这个项目让我理解到，AI 生成素材、创意编程和物理计算可以如何共同构成一个完整的互动体验。它也是一次将角色设计、界面设计、硬件原型和实时互动结合在一起的重要实验。
+</div>

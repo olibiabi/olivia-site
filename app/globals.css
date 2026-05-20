@@ -1,26 +1,392 @@
 @import "tailwindcss";
 
+/* ─── Palette (Design Doc v2 §1.1) ─────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Backgrounds */
+  --paper: #fdf6ee;
+
+  /* Text */
+  --ink: #5b3a35;
+  --ink-soft: #8a6e68;
+  --ink-mute: #b5a099;
+
+  /* Accent */
+  --rose-deep: #c45670;
+  --rose-soft: #f0bfc0;
+  --rose-light: #f4d1d5;
+
+  /* Lines */
+  --hairline: #e8d5cb;
 }
 
+/* ─── Tailwind v4 theme exposure ───────────────────────────── */
+/* Generates utilities like `bg-paper`, `text-ink-soft`,
+   `text-rose-deep`, `border-hairline`, etc. */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-mute: var(--ink-mute);
+  --color-rose-deep: var(--rose-deep);
+  --color-rose-soft: var(--rose-soft);
+  --color-rose-light: var(--rose-light);
+  --color-hairline: var(--hairline);
+
+  /* Inter for English; Noto Sans SC for Chinese glyphs via fallback. */
+  --font-sans: var(--font-inter), "Noto Sans SC", sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ─── Force light mode ─────────────────────────────────────── */
+html {
+  color-scheme: light;
+}
+
+/* ─── Base body ────────────────────────────────────────────── */
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-inter), "Noto Sans SC", sans-serif;
+  font-weight: 400;
+}
+
+/* ─── Text selection ───────────────────────────────────────── */
+::selection {
+  background-color: var(--rose-deep);
+  color: var(--paper);
+}
+
+/* ─── Chinese paragraph block ──────────────────────────────── */
+/* Lighter form than v1: just smaller + softer color, same font family
+   (Noto Sans SC kicks in for Chinese glyphs via the unicode-range
+   fallback). No border-left, no special font swap. */
+.zh,
+.zh p {
+  font-size: 0.875em;
+  line-height: 1.9;
+  color: var(--ink-soft);
+}
+
+/* ─── Decorative crosses ───────────────────────────────────── */
+/* All <Cross /> instances carry the `cross` class.
+   `pointer-events: none` is critical (Risk §6.5) — otherwise
+   decorations block clicks on text and links beneath them. */
+.cross {
+  pointer-events: none;
+}
+
+/* ─── Scroll-triggered breathing (Design Doc §4.1) ─────────── */
+/* The `useScrollBreathing` hook adds `scrolling` to <body> while the
+   user is actively scrolling and removes it 150ms after they stop.
+   Every `.cross` then pulses subtly until they stop. */
+body.scrolling .cross {
+  animation: breathePulse 3s ease-in-out infinite;
+}
+
+@keyframes breathePulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ─── .mdx-article — /projects/[slug] body styles (Design Doc §3.3) ─── */
+/* All rules scoped under .mdx-article so they don't pollute other
+   pages. Editorial "magazine" justify with center-last-line on every
+   paragraph. Images centered, original aspect ratio (NO aspect-ratio,
+   NO object-fit, per §6.1 / §6.3).
+   Width strategy: the .mdx-article container itself has no max-width,
+   so images can be 800px wide. Text elements (p / .zh / h2 / h3) cap
+   at 600px and self-center, giving the editorial reading column. */
+
+.mdx-article {
+  padding: 0 24px;
+}
+
+.mdx-article p {
+  position: relative;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 28px;
+  padding-left: 24px;        /* 16px cross + 8px gap */
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--ink);
+  text-align: left;
+}
+
+/* `<div className="zh">` and any <p> markdown auto-inserts inside it
+   both pick up the secondary-voice typography. The `.mdx-article .zh p`
+   selector (specificity 0,2,1) outranks `.mdx-article p` (0,1,1), so
+   the inner paragraph inherits zh styles instead of default p styles. */
+.mdx-article .zh,
+.mdx-article .zh p {
+  font-size: 14px;
+  line-height: 1.9;
+  color: var(--ink-soft);
+  text-align: left;
+}
+
+.mdx-article .zh {
+  position: relative;
+  max-width: 600px;
+  margin: 0 auto 28px;
+  padding-left: 24px;
+}
+
+.mdx-article .zh p {
+  /* Inner p inside .zh: don't double the padding (parent .zh already
+     has it) and don't add its own margin / max-width — the wrapping
+     .zh handles those. Also suppress its decorative cross (the .zh
+     parent's ::before is the one that shows). */
+  max-width: none;
+  margin: 0;
+  padding-left: 0;
+}
+
+.mdx-article .zh p::before {
+  content: none;
+}
+
+/* ─── Decorative paragraph-leading cross (CSS-only, ::before) ────
+   Each top-level <p> and <div className="zh"> gets a 16px cross at
+   left edge, vertically aligned with the first text line. Variant
+   cycles through 4 PNGs via :nth-of-type. nth-OF-TYPE (not nth-child)
+   so p's cycle among p siblings and .zh divs cycle among div siblings —
+   producing 4-variant rotation regardless of EN/ZH ordering.
+   These pseudo-elements are NOT `.cross` class members, so they don't
+   participate in scroll-breathing — they're static decoration. */
+
+.mdx-article p::before,
+.mdx-article .zh::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.5em;            /* roughly aligns with first-line baseline */
+  width: 16px;
+  height: 16px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* English paragraph cycle: a, b, c, d (by p position among p siblings) */
+.mdx-article p:nth-of-type(4n + 1)::before {
+  background-image: url("/decorations/cross-a.png");
+}
+.mdx-article p:nth-of-type(4n + 2)::before {
+  background-image: url("/decorations/cross-b.png");
+}
+.mdx-article p:nth-of-type(4n + 3)::before {
+  background-image: url("/decorations/cross-c.png");
+}
+.mdx-article p:nth-of-type(4n)::before {
+  background-image: url("/decorations/cross-d.png");
+}
+
+/* Chinese block cycle offset by one (b, c, d, a) so a .zh that
+   sits next to an English p with cross-a doesn't repeat cross-a.
+   :nth-of-type counts among DIV siblings — works as long as all
+   divs in the article are .zh containers (currently true). */
+.mdx-article .zh:nth-of-type(4n + 1)::before {
+  background-image: url("/decorations/cross-b.png");
+}
+.mdx-article .zh:nth-of-type(4n + 2)::before {
+  background-image: url("/decorations/cross-c.png");
+}
+.mdx-article .zh:nth-of-type(4n + 3)::before {
+  background-image: url("/decorations/cross-d.png");
+}
+.mdx-article .zh:nth-of-type(4n)::before {
+  background-image: url("/decorations/cross-a.png");
+}
+
+/* Detail media: centered, uncropped, and capped consistently across
+   project and lab content pages. */
+.mdx-article img,
+.lab-article img {
+  display: block;
+  width: auto;
+  max-width: min(100%, 800px);
+  max-height: 720px;
+  height: auto;
+  object-fit: contain;
+  margin: 48px auto;
+}
+
+.mdx-article .video-embed,
+.lab-article .video-embed {
+  width: 100%;
+  max-width: 800px;
+  margin: 48px auto 64px;
+  position: relative;
+  aspect-ratio: 16 / 9;
+}
+
+.mdx-article .video-embed iframe,
+.lab-article .video-embed iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+.mdx-article .project-video,
+.project-article .project-video,
+.project-content .project-video,
+article .project-video {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 2rem auto !important;
+  display: flex !important;
+  justify-content: center !important;
+}
+
+.project-video {
+  outline: 2px solid transparent !important;
+}
+
+.mdx-article .project-video video,
+.project-article .project-video video,
+.project-content .project-video video,
+article .project-video video {
+  width: min(100%, 720px) !important;
+  max-width: 720px !important;
+  height: auto !important;
+  max-height: 560px !important;
+  display: block !important;
+  object-fit: contain !important;
+  margin: 0 auto !important;
+}
+
+/* All headings (h1–h4) share the 600px reading column with body text
+   AND left-align to match paragraph alignment. Headings explicitly
+   reset `padding-left: 0` so they don't inherit the 24px reservation
+   for the paragraph-leading cross — heading first letter sits flush
+   left, paragraph first letter sits 24px in (cross occupies that gap). */
+.mdx-article h1,
+.mdx-article h2,
+.mdx-article h3,
+.mdx-article h4 {
+  max-width: 600px;
+  margin: 48px auto 16px;
+  padding-left: 0;
+  text-align: left;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.mdx-article h2 {
+  font-size: 24px;
+}
+
+.mdx-article h3 {
+  font-size: 20px;
+}
+
+/* ─── .lab-article — /lab/[slug] body styles (Design Doc §3.5) ─── */
+/* Deliberately SEPARATE from .mdx-article. Lab is image-driven with
+   light text — no paragraph-leading cross decoration, no editorial
+   justify, no 600px reading column. Bigger container (900px) to fit
+   the 2-column image grid. */
+
+.lab-article {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 80px;
+}
+
+.lab-article p {
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--ink);
+  text-align: left;
+  margin-bottom: 24px;
+}
+
+/* In-MDX image grid: `<div className="lab-gallery">` wraps a series
+   of images and arranges them in a 2-column grid. Author writes:
+   <div className="lab-gallery">
+   ![](img1.jpg)
+   ![](img2.jpg)
+   …
+   </div> */
+.lab-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin: 32px 0;
+}
+
+.lab-gallery img {
+  width: auto;
+  max-width: min(100%, 800px);
+  max-height: 720px;
+  height: auto;
+  object-fit: contain;
+  /* Inside .lab-gallery, the shared `img` style from mdx-components
+     (60px auto margin, max-width 800px) gets overridden because
+     `.lab-gallery img` is more specific (0,2,1 vs 0,1,1). */
+  margin: 0 auto;
+  display: block;
+}
+
+.lab-article .motion-gallery {
+  width: min(960px, calc(100vw - 4rem));
+  max-width: none;
+  margin: 3rem 50% 0;
+  transform: translateX(-50%);
+}
+
+.lab-article .motion-feature {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.lab-article .motion-feature video {
+  width: min(680px, 100%);
+  max-width: none;
+  max-height: none;
+  height: auto;
+  display: block;
+  margin: 0;
+  border-radius: 0;
+}
+
+.lab-article .motion-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 1.25rem !important;
+  align-items: center;
+}
+
+.lab-article .motion-grid video {
+  width: 100% !important;
+  height: 360px !important;
+  max-width: none !important;
+  max-height: none !important;
+  object-fit: contain !important;
+  display: block !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+}
+
+@media (max-width: 768px) {
+  .lab-article .motion-gallery {
+    width: calc(100vw - 2rem);
+  }
+
+  .lab-article .motion-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .lab-article .motion-grid video {
+    height: auto !important;
+  }
 }
