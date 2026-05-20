@@ -153,29 +153,29 @@ export default function InformationPage() {
         <Divider left="42%" variant="c" />
 
         <InfoSection label="CONTACT">
-          <div>
-            <ContactLabel>EMAIL</ContactLabel>
-            <a
-              href="mailto:yz12054@nyu.edu"
-              className="inline-block text-base text-ink border-b border-hairline pb-px transition-colors duration-200 hover:text-rose-deep hover:border-rose-deep"
-            >
-              yz12054@nyu.edu
-            </a>
-
-            <div className="mt-6">
+          <div className="flex flex-col items-start">
+            <div>
+              <ContactLabel>EMAIL</ContactLabel>
               <a
-                href="/Yixuan_Zhu_CV.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                download
-                className="inline-flex max-w-full flex-wrap items-center justify-center gap-2.5 rounded-3xl bg-rose-deep px-6 py-3.5 text-center text-[13px] font-medium uppercase tracking-wider text-paper transition-colors duration-200 hover:bg-ink md:flex-nowrap md:px-9"
+                href="mailto:yz12054@nyu.edu"
+                className="inline-block text-base text-ink border-b border-hairline pb-px transition-colors duration-200 hover:text-rose-deep hover:border-rose-deep"
               >
-                Download Resume
-                <span aria-hidden="true">/</span>
-                下载简历
-                <span className="text-sm">↓</span>
+                yz12054@nyu.edu
               </a>
             </div>
+
+            <a
+              href="/Yixuan_Zhu_CV.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              download
+              className="mt-8 inline-flex max-w-full flex-wrap items-center justify-center gap-2.5 rounded-3xl bg-rose-deep px-6 py-3.5 text-center text-[13px] font-medium uppercase tracking-wider text-paper transition-colors duration-200 hover:bg-ink md:flex-nowrap md:px-9"
+            >
+              Download Resume
+              <span aria-hidden="true">/</span>
+              下载简历
+              <span className="text-sm">↓</span>
+            </a>
           </div>
         </InfoSection>
       </main>
