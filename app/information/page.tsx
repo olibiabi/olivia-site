@@ -162,18 +162,20 @@ export default function InformationPage() {
               yz12054@nyu.edu
             </a>
 
-            <a
-              href="/Yixuan_Zhu_CV.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              download
-              className="mt-6 inline-flex max-w-full flex-wrap items-center justify-center gap-2.5 rounded-3xl bg-rose-deep px-6 py-3.5 text-center text-[13px] font-medium uppercase tracking-wider text-paper transition-colors duration-200 hover:bg-ink md:flex-nowrap md:px-9"
-            >
-              Download Resume
-              <span aria-hidden="true">/</span>
-              下载简历
-              <span className="text-sm">↓</span>
-            </a>
+            <div className="mt-6">
+              <a
+                href="/Yixuan_Zhu_CV.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                download
+                className="inline-flex max-w-full flex-wrap items-center justify-center gap-2.5 rounded-3xl bg-rose-deep px-6 py-3.5 text-center text-[13px] font-medium uppercase tracking-wider text-paper transition-colors duration-200 hover:bg-ink md:flex-nowrap md:px-9"
+              >
+                Download Resume
+                <span aria-hidden="true">/</span>
+                下载简历
+                <span className="text-sm">↓</span>
+              </a>
+            </div>
           </div>
         </InfoSection>
       </main>
